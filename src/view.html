@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+
+
+<script>
+  window.opener.vegas.views.each(function (view) {
+    if (window.name === view.name) {
+      view.trigger('load', view);
+    }
+  });
+</script>
+</body>
+</html>

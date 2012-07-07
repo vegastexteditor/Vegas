@@ -1,0 +1,3 @@
+vegas.settings = {
+  flavor: 'default'
+}
