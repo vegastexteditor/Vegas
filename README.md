@@ -7,7 +7,7 @@ Vegas Text Editor
 
 Check It Out
 =====================
-  view it <a href="http://editor.vegasjs.com/git/master/src/">online</a>
+  view it <a href="http://www.code.editor.vegasjs.com/master/src/vegas.html">online</a>
   view your <a href="src/vegas.html">local copy</a>
   or download the compiled <a href="http://download.editor.vegasjs.com/">version</a> here.
 
