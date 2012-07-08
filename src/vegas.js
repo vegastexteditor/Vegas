@@ -9,9 +9,21 @@
   };
 
   vegas.fetchFlavor = function (flavorName, callback) {
-    var flavorName1 = flavorName;
+
+    if (typeof(flavorName) == 'function') {
+      callback = flavorName;
+      flavorName = vegas.getFlavorName();
+    }
+
+    flavorName = flavorName || vegas.getFlavorName();
+
     vegas.loadScript('flavors/' + flavorName + '/flavor.js', function () {
-      callback.call(this, vegas.flavors[vegas.getFlavorName()]);
+      if (callback) {
+        callback.call(this, vegas.flavors[flavorName]);
+      }
+      else {
+        console.log(vegas.flavors[flavorName]);
+      }
     });
   };
 
@@ -23,8 +35,19 @@
     return vegas.getFlavor().theme;
   };
 
+  vegas.getTheme = function() {
+    return vegas.themes[vegas.getThemeName()];
+  }
+
   vegas.fetchThemeTemplates = function (callback) {
-    vegas.fetchThemeInfoFile(function (theme) {
+
+    if (callback === undefined) {
+      callback = function () {
+        console.info('retrieved templates:', vegas.templates);
+      }
+    }
+
+    vegas.fetchThemeInfo(function (theme) {
 
       var templatesLoaded = 0;
 
@@ -40,7 +63,7 @@
              vegas.templates[templateName] = template;
              templatesLoaded++;
              if (templatesLoaded == theme.templates.length) {
-               callback.call(vegas);
+               callback.call(vegas, vegas.templates);
              }
            }
         });
@@ -50,11 +73,20 @@
     });
   };
 
-  vegas.fetchThemeInfoFile = function (callback) {
+  vegas.fetchThemeInfo = function (callback) {
+
     var themeName  = vegas.getThemeName();
+
+    if (callback === undefined) {
+      callback = function () {
+        console.info('theme info retrieved', vegas.themes[themeName]);
+      };
+    }
+
     vegas.loadScript('themes/' + themeName + '/theme.js', function () {
-      callback.call(this, vegas.themes[vegas.getThemeName()]);
+      callback.call(this, vegas.themes[themeName]);
     });
+
   };
 
   vegas.getInfoFiles = function () {
@@ -70,22 +102,28 @@
       infoFiles.push('modules/' + module + '/' + module  + '.module.js');
     });
 
-
     return infoFiles
   };
 
   vegas.fetchInfoFiles = function (callback) {
+
+    if (callback === undefined) {
+      callback = function () {
+        console.info('fetched info files.');
+      };
+    }
+
     var infoFiles = vegas.getInfoFiles();
 
     vegas.libraries = vegas.libraries || {};
     vegas.modules= vegas.modules || {};
 
     vegas.loadScripts(infoFiles, function () {
-      callback.call(this, callback);
+      callback.call(vegas);
     });
   };
 
-  vegas.getModuleFiles = function () {
+  vegas.getModuleFileInfo = function () {
     var files = {};
     var file;
 
@@ -121,7 +159,7 @@
 
   function getRequiredFiles(file) {
 
-    moduleFiles = moduleFiles || vegas.getModuleFiles()
+    moduleFiles = moduleFiles || vegas.getModuleFileInfo()
 
     file.requires.forEach(function (requiredFileName) {
 
@@ -140,7 +178,7 @@
     return requiredFiles;
   }
 
-  vegas.getModuleFilesByDependencyOrder = function () {
+  vegas.getModuleFileInfoByDependencyOrder = function () {
     var filesOrderedByDependencies = [];
 
     for (moduleName in vegas.modules) {
@@ -155,8 +193,8 @@
   };
 
   vegas.getFilesByDependencyOrder = function () {
-    var modules = vegas.getModuleFilesByDependencyOrder();
-    var moduleInfos = vegas.getModuleFiles()
+    var modules = vegas.getModuleFileInfoByDependencyOrder();
+    var moduleInfos = vegas.getModuleFileInfo()
 
     var files = [];
     modules.forEach(function (module) {
@@ -178,15 +216,12 @@
     // Make sure LABjs is loaded
     loadLAB(function () {
 
-      // Get scripts scripts sorted by their dependencies
-      //var scripts = vegas.getScripts() || [];
-
       vegas.fetchSettings(function (settings) {
         var flavorName = vegas.getFlavorName();
         vegas.fetchFlavor(flavorName, function () {
           vegas.fetchInfoFiles(function () {
 
-            var moduleFiles = vegas.getModuleFiles();
+            var moduleFiles = vegas.getModuleFileInfo();
             var files = vegas.getFilesByDependencyOrder();
             vegas.loadScripts(files, function () {
               vegas.fetchThemeTemplates(function () {
@@ -285,6 +320,12 @@
 
   vegas.fetchSettings = function (callback) {
 
+    if (callback == undefined) {
+      callback = function () {
+        console.info('fetched settings', vegas.settings);
+      };
+    }
+
     var settingsFiles = [
       'settings/default.settings.js',
       'settings/settings.js'
@@ -294,10 +335,6 @@
       callback.call(this, vegas.settings);
     });
 
-  };
-
-  vegas.getScripts = function () {
-    return ['settings/settings.js'];
   };
 
   init();

@@ -10,25 +10,52 @@
   var vegas = global.vegas || {},
     util = vegas.util;
 
-  function Region(context) {
+  function Region(options) {
 
-    // Use base class for utility methods
-    util.extend(this, new vegas.Base());
+    // extend Entity class for common methods
+    util.extend(this, new vegas._Entity(this.constructor.name, options));
 
-    this.name = 'Region ' +  this.collection().length;
+    // Merge in default settings with provided options into the objects settings
+    this.useSettings({
+      context: false,
+      regionSetting1: 'regionSetting1Value'
+    }, options);
 
     // Add the object to the collection
     this.collection().add(this);
 
+    // Render the item to the application
+    this.render();
+
+  };
+
+  Region.prototype.createComponent = function (options) {
+    options = options || {};
+    options.context = this.getContext();
+    return new vegas._Component(options);
   };
 
   /**
-   * The collection the object belongs to.
+   * Gets the required variables in order to render the component into the
+   * application.
    */
-  Region.prototype.collection = function () {
-    return vegas.regions;
+  Region.prototype.getTemplateVariables = function () {
+    // Gather up variables for the template
+    return {
+      id: this.getId(),
+      entity: this.getEntityName(),
+      //tab: this.getCollection('tabs').getTemplateVariables()
+    };
   };
 
-  global.vegas.Region = Region;
+  /**
+   * Renders the region and inserts it into the application for display.
+   */
+  Region.prototype.render = function () {
+    var regionContainer = vegas.tpl('regionContainer', this.getTemplateVariables());
+    this.getView().getElement().html(regionContainer);
+  };
+
+  global.vegas._Region = Region;
 
 })(this);

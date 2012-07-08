@@ -10,29 +10,50 @@
   var vegas = global.vegas || {},
     util = vegas.util;
 
-  function BaseRegion(context) {
+  function BaseRegion(options) {
 
-    this.context = context;
+    // extend Entity class for common methods
+    util.extend(this, new vegas._Entity(this.constructor.name, options));
 
-    // Use base class for utility methods
-    util.extend(this, new vegas.Base());
+    // Use the passed in context
+    this.useContext(this.settings('context'));
 
-    var regionName = 'BaseRegion';
+    // Add the region context
+    this.setContext('region', this, true);
 
-    var view = {
-      id: 'id-12093856125396',
-      regionName: regionName
+    // Add the object to the collection
+    this.collection().add(this);
+
+    // Render the item to the application
+    this.render();
+
+  };
+
+  BaseRegion.prototype.Component = function (options) {
+    return new vegas._Component(options);
+  };
+
+  /**
+   * Gets the required variables in order to render the component into the
+   * application.
+   */
+  BaseRegion.prototype.getTemplateVariables = function () {
+    // Gather up variables for the template
+    return {
+      id: this.getId(),
+      entity: this.getEntityName(),
+      tab: tab.getTemplateVariables()
     };
+  }
 
-    this.render(view);
-
+  /**
+   * Renders the region and inserts it into the application for display.
+   */
+  BaseRegion.prototype.render = function () {
+    var baseRegionContainer = vegas.tpl('baseRegionContainer', this.getTemplateVariables());
+    this.getView().getElement().html(baseRegionContainer);
   };
 
-  BaseRegion.prototype.render = function (view) {
-    var baseRegionContainer = vegas.tpl('baseRegionContainer', view);
-    jQuery(this.context.document.body).html(baseRegionContainer);
-  };
-
-  global.vegas.BaseRegion = BaseRegion;
+  global.vegas._BaseRegion = BaseRegion;
 
 })(this);

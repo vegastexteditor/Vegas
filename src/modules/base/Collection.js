@@ -157,6 +157,6 @@
     return this[pos];
   };
 
-  global.vegas.Collection = Collection;
+  global.vegas._Collection = Collection;
 
 })(this);

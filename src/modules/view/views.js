@@ -8,6 +8,6 @@
   global.vegas = global.vegas || {};
 
   // Create a vegas collections object and attach it to the vegas object
-  global.vegas.views = new global.vegas.ViewsCollection();
+  global.vegas.views = new global.vegas._ViewsCollection();
 
 })(this);

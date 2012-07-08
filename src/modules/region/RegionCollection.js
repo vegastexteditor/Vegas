@@ -10,13 +10,22 @@
     util = vegas.util;
 
   function RegionCollection() {
-    util.extend(this, new vegas.ObjectCollection());
+    util.extend(this, new vegas._ObjectCollection());
   };
 
-  RegionCollection.prototype.regionCollectionMethod = function () {
-    console.log('regionCollectionMethod');
+  RegionCollection.prototype.getObject = function (id) {
+    var self = this;
+
+    this.each(function (item) {
+      if (item.getId() == id) {
+        return item;
+      }
+    });
+
+    return false;
+
   };
 
-  global.vegas.RegionCollection = RegionCollection;
+  global.vegas._RegionCollection = RegionCollection;
 
 })(this);

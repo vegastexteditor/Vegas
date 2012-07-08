@@ -10,7 +10,7 @@
     util = vegas.util;
 
   function ViewsCollection() {
-    util.extend(this, new vegas.ObjectCollection());
+    util.extend(this, new vegas._ObjectCollection());
   };
 
   ViewsCollection.prototype.close = function () {
@@ -23,6 +23,6 @@
     }
   };
 
-  global.vegas.ViewsCollection = ViewsCollection;
+  global.vegas._ViewsCollection = ViewsCollection;
 
 })(this);

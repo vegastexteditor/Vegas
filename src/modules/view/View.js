@@ -10,128 +10,126 @@
   var vegas = global.vegas || {},
     util = vegas.util;
 
-  function View(context) {
+  function View(options) {
 
     var self = this;
 
-    // Use base class for utility methods
-    util.extend(this, new vegas.Base());
+    // extend Entity class for common methods
+    util.extend(this, new vegas._Entity(this.constructor.name, options));
 
-    // Object settings
-    this.settings = {};
-    // Whether or not to use the primary window for this view.
-    this.settings.useBaseWindow = false;
+    // Merge in default settings with provided options into the objects settings
+    this.useSettings({
+      useBaseWindow: false,
+      windowContext: window
+    }, options);
 
     // If first param is false, do not open a window, use the original vegas
     // window to create the view. This is typical for the first view.
-    if (context === false) {
-      this.settings.useBaseWindow = true;
-    }
+    this.settings('useBaseWindow', true);
 
-    // The window context the view should operate in
-    this.context = context || window;
-
-    // Name the current window
-    this.name = 'New Window ' +  this.collection().length;
-
-    // When the view window has loaded.
-    this.on('load', function () {
-      self.viewOpen = true;
-      // Set the title of the window
-      self.setTitle(self.name);
-      // Insert a region in the window.
-      new vegas.BaseRegion(self.context);
-    });
-
-    // Determine if we should use the base window
-    var shouldUseBaseWindow = this.shouldUseBaseWindow();
+    // Let the view know about its context.
+    this.setViewContext();
 
     // If we shouldn't use the base window
-    if (!shouldUseBaseWindow) {
-      // and the new view isn't already open
-      if (!this.viewOpen) {
-        // then open the new window.
-        this.open();
-      }
+    if (!this.settings('useBaseWindow')) {
+      // then open the new window.
+      this._openWindow();
     }
     else {
       // We are using a window thats already open, so its ready.
       this.trigger('load');
+      console.info('Using current window for view');
     }
+
+    // When the view window has loaded.
+    this.on('load', function () {
+      console.info('View loaded');
+
+      // Render the window
+      self.render();
+
+      // Insert a region into the view
+      var region = self.createRegion({
+        regionSetting1: 'regionSetting1Value'
+      });
+
+      // Insert a component into the region
+      var component = region.createComponent();
+
+    });
 
     // Add the object to the collection
     this.collection().add(this);
 
+  };
+
+  View.prototype.createRegion = function (options) {
+      options = options || {};
+      options.context = this.getContext();
+      return new vegas._Region(options);
+  };
+
+  View.prototype.setViewContext = function () {
+
+    // Add the view context
+    this.setContext('view', this, true);
+
+    // Let the view know about its window
+    this.setContext('window', this.settings('windowContext'));
+
+    // Let the view know about its document
+    this.setContext('document', this.settings('windowContext').document);
 
   };
 
-  View.prototype.shouldUseBaseWindow = function () {
+  View.prototype.render = function (options) {
+    // Set the title of the window
+    this.setTitle();
 
-    if (this.settings.useBaseWindow) {
-      return true;
-    }
+    var body = jQuery(this.getDocument().body);
 
-    return (this.collection().length > 0);
+    var viewContainer = vegas.tpl('viewContainer', this.getTemplateVariables());
+
+    body.html(viewContainer);
   };
 
   /**
-   * The collection the object belongs to.
+   * Gets the required variables in order to render the component into the
+   * application.
    */
-  View.prototype.collection = function () {
-    return vegas.views;
-  };
+  View.prototype.getTemplateVariables = function () {
+    // Gather up variables for the template
+    var vars = {
+      id: this.getId(),
+      entity: this.getEntityName(),
+      //tab: tab.getTemplateVariables()
+    };
 
-  // Checks to see if the window is the primary window
-  View.prototype.isRootView= function () {
-    return (vegas.views.length <= 1);
-  };
+    return vars;
+  }
 
-  // Checks to see if the window is the primary window
-  View.prototype.isPrimary = function () {
-    return (this.context === window);
-  };
 
   // Opens the view window
-  View.prototype.open = function () {
+  View.prototype._openWindow = function () {
     var options = 'width=200,height=100'
-    this.context = window.open('view.html?' + Math.random(0,9), this.name, options);
-  };
-
-  View.prototype.trigger = function (event) {
-    this._on = this._on || {};
-
-    if (!this._on[event]) {
-      this._on[event] = [];
-    }
-
-    this._on[event].forEach(function (hook) {
-      hook.call(this, this);
-    });
-  };
-
-  View.prototype.on = function (event, callback) {
-    this._on = this._on || {};
-    if (!this._on[event]) {
-      this._on[event] = [];
-    }
-    this._on[event].push(callback);
+    var win = window.open('view.html?' + Math.random(0,9), this.name, options);
+    // Let the view know about the new window reference
+    this.setContext('window', win);
   };
 
   View.prototype.setTitle = function (title) {
-    this.context.document.title = title;
+    title = title || 'New Window ' +  this.collection().length;
+    this.getDocument().title = title;
   };
 
   // Closes the view window
   View.prototype.close = function () {
-    this._viewOpen = false;
-    this.context.close();
+    this.getWindow().close();
     vegas.views.remove(this);
 
     var self = this;
-    var context = this.context;
-    var name = this.name;
     setTimeout(function () {
-      console.log(context.closed, name);
+      console.log(self);
     }, 500);
 
   };

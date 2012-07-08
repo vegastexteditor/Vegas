@@ -13,13 +13,13 @@
     util = vegas.util;
 
   function ObjectCollection() {
-    util.extend(this, new vegas.Collection());
+    util.extend(this, new vegas._Collection());
   };
 
   ObjectCollection.prototype.hi = function () {
     console.log('hi');
   };
 
-  global.vegas.ObjectCollection = ObjectCollection;
+  global.vegas._ObjectCollection = ObjectCollection;
 
 })(this);
