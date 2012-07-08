@@ -14,6 +14,8 @@
 
     this.setName(name);
 
+    this.setId();
+
     this.settings('collection', this.getPluralName());
 
     if (this.settings('hasCollection')) {
@@ -36,9 +38,6 @@
    * Retrieve the entities ID
    */
   Entity.prototype.getId = function () {
-    if (!this._id) {
-      this.setId();
-    }
     return this._id;
   };
 

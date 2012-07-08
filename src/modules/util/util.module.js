@@ -7,7 +7,7 @@ vegas.modules.util = {
       version: 'dev',
       namespace: 'vegas.util',
       src: 'modules/util/util.js',
-      requires: ['jquery', 'underscore', 'mustache']
+      requires: ['jquery', 'underscore', 'mustache', 'less']
     },
   ]
 };

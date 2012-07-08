@@ -37,7 +37,28 @@
 
   vegas.getTheme = function() {
     return vegas.themes[vegas.getThemeName()];
-  }
+  };
+
+  vegas.fetchThemeStyles = function () {
+
+    vegas.fetchThemeInfo(function (theme) {
+
+      var i = 0;
+      theme.styles.forEach(function (style) {
+        i++;
+        var link = document.createElement('link');
+        link.rel = 'stylesheet/less';
+        link.href = style;
+        link.id = 'stylesheet' + i;
+        jQuery('head').append(link);
+        less.sheets.push(document.getElementById(link.id));
+      });
+
+      less.refresh(true);
+
+    });
+
+  };
 
   vegas.fetchThemeTemplates = function (callback) {
 
@@ -53,7 +74,7 @@
 
       theme.templates.forEach(function (templateName) {
         var themeName = vegas.getThemeName();
-        var templateFile = 'themes/' + themeName + '/templates/' + templateName + '.html';
+        var templateFile = 'themes/' + themeName + '/templates/' + templateName + '.html?' + +new Date();
 
          jQuery.ajax({
            url: templateFile,
@@ -225,6 +246,7 @@
             var files = vegas.getFilesByDependencyOrder();
             vegas.loadScripts(files, function () {
               vegas.fetchThemeTemplates(function () {
+                vegas.fetchThemeStyles();
                 vegas.onready();
               });
             });

@@ -54,7 +54,14 @@
       });
 
       // Insert a component into the region
-      var component = region.createComponent();
+      var component = region.createComponent({
+        title: 'title1'
+      });
+
+      // Insert a component into the region
+      var component = region.createComponent({
+        title: 'title2'
+      });
 
     });
 

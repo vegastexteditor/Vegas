@@ -41,6 +41,7 @@
   Tab.prototype._getTemplateVariables = function () {
     // Gather up variables for the template
     var vars = {
+      title: this.settings('title'),
       id: this.getId(),
       entity: this.getEntityName()
     };
@@ -48,12 +49,34 @@
     return vars;
   };
 
+  Tab.prototype.close = function () {
+    this.collection().removeItem(this);
+  };
+
+  Tab.prototype._attachEvents = function () {
+
+    var self = this;
+
+    this.getRegion().getElement().bind('click', function (e) {
+      if (e.target.className === "close") {
+        self.trigger('beforeClose');
+        self.close();
+        self.trigger('close');
+      }
+    });
+
+    this._attachedEvents = true;
+  };
+
   /**
    * Renders the tab and inserts it into the application for display.
    */
   Tab.prototype.render = function () {
     var tabContainer = vegas.tpl('tabContainer', this._getTemplateVariables());
-    this.getComponent().getElement().html(tabContainer);
+    this.getRegion().getElement().find('.tabs').append(tabContainer);
+    if (!this._attachedEvents) {
+      this._attachEvents();
+    }
   };
 
   global.vegas._Tab = Tab;
