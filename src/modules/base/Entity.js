@@ -73,10 +73,10 @@
     var context = options.context || {};
 
     // Use the passed in context
-    this.useContext(context);
+    this._useContext(context);
 
     // Add the entity context
-    this.setContext(contextName, this, true);
+    this._setContext(contextName, this, true);
   };
 
   /**
@@ -84,7 +84,7 @@
    * know about its component, a component should know about its region, a region
    * should know about its view, a view should know about its window, etc.
    */
-  Entity.prototype.setContext = function (contextName, contextValue, isCurrentEntityContext) {
+  Entity.prototype._setContext = function (contextName, contextValue, isCurrentEntityContext) {
 
     this._context = this._context || {};
     this._context[contextName] = contextValue;
@@ -106,7 +106,7 @@
     };
   };
 
-  Entity.prototype.useContext = function (context) {
+  Entity.prototype._useContext = function (context) {
     var contextName;
     for (contextName in context) {
       this._createContextGetter(contextName);
@@ -121,18 +121,6 @@
   Entity.prototype.setEntityName = function (entityName) {
     this._entityName = entityName
   };
-
-  /*
-  Entity.prototype.inheritContext = function (context) {
-    var contextToInheritFrom = context || this.settings('context')
-
-    if (!contextToInheritFrom) {
-      util.error('Could not inherit context');
-    }
-
-    this.useContext(contextToInheritFrom);
-  };
-  */
 
   Entity.prototype.getContext = function (contextName) {
     var context = this._context;

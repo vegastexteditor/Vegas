@@ -21,10 +21,10 @@
     }, options);
 
     // Use the passed in context
-    this.useContext(this.settings('context'));
+    this._useContext(this.settings('context'));
 
     // Add the tab context
-    this.setContext('tab', this, true);
+    this._setContext('tab', this, true);
 
     // Add the object to the collection
     this.collection().add(this);
@@ -38,7 +38,7 @@
    * Gets the required variables in order to render the tab into the
    * application.
    */
-  Tab.prototype.getTemplateVariables = function () {
+  Tab.prototype._getTemplateVariables = function () {
     // Gather up variables for the template
     var vars = {
       id: this.getId(),
@@ -52,7 +52,7 @@
    * Renders the tab and inserts it into the application for display.
    */
   Tab.prototype.render = function () {
-    var tabContainer = vegas.tpl('tabContainer', this.getTemplateVariables());
+    var tabContainer = vegas.tpl('tabContainer', this._getTemplateVariables());
     this.getComponent().getElement().html(tabContainer);
   };
 

@@ -39,12 +39,12 @@
    * Gets the required variables in order to render the component into the
    * application.
    */
-  Region.prototype.getTemplateVariables = function () {
+  Region.prototype._getTemplateVariables = function () {
     // Gather up variables for the template
     return {
       id: this.getId(),
       entity: this.getEntityName(),
-      //tab: this.getCollection('tabs').getTemplateVariables()
+      //tab: this.getCollection('tabs')._getTemplateVariables()
     };
   };
 
@@ -52,7 +52,7 @@
    * Renders the region and inserts it into the application for display.
    */
   Region.prototype.render = function () {
-    var regionContainer = vegas.tpl('regionContainer', this.getTemplateVariables());
+    var regionContainer = vegas.tpl('regionContainer', this._getTemplateVariables());
     this.getView().getElement().html(regionContainer);
   };
 

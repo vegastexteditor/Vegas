@@ -72,13 +72,13 @@
   View.prototype.setViewContext = function () {
 
     // Add the view context
-    this.setContext('view', this, true);
+    this._setContext('view', this, true);
 
     // Let the view know about its window
-    this.setContext('window', this.settings('windowContext'));
+    this._setContext('window', this.settings('windowContext'));
 
     // Let the view know about its document
-    this.setContext('document', this.settings('windowContext').document);
+    this._setContext('document', this.settings('windowContext').document);
 
   };
 
@@ -88,7 +88,7 @@
 
     var body = jQuery(this.getDocument().body);
 
-    var viewContainer = vegas.tpl('viewContainer', this.getTemplateVariables());
+    var viewContainer = vegas.tpl('viewContainer', this._getTemplateVariables());
 
     body.html(viewContainer);
   };
@@ -97,12 +97,12 @@
    * Gets the required variables in order to render the component into the
    * application.
    */
-  View.prototype.getTemplateVariables = function () {
+  View.prototype._getTemplateVariables = function () {
     // Gather up variables for the template
     var vars = {
       id: this.getId(),
       entity: this.getEntityName(),
-      //tab: tab.getTemplateVariables()
+      //tab: tab._getTemplateVariables()
     };
 
     return vars;
@@ -114,7 +114,7 @@
     var options = 'width=200,height=100'
     var win = window.open('view.html?' + Math.random(0,9), this.name, options);
     // Let the view know about the new window reference
-    this.setContext('window', win);
+    this._setContext('window', win);
   };
 
   View.prototype.setTitle = function (title) {

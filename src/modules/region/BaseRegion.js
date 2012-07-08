@@ -16,10 +16,10 @@
     util.extend(this, new vegas._Entity(this.constructor.name, options));
 
     // Use the passed in context
-    this.useContext(this.settings('context'));
+    this._useContext(this.settings('context'));
 
     // Add the region context
-    this.setContext('region', this, true);
+    this._setContext('region', this, true);
 
     // Add the object to the collection
     this.collection().add(this);
@@ -37,12 +37,12 @@
    * Gets the required variables in order to render the component into the
    * application.
    */
-  BaseRegion.prototype.getTemplateVariables = function () {
+  BaseRegion.prototype._getTemplateVariables = function () {
     // Gather up variables for the template
     return {
       id: this.getId(),
       entity: this.getEntityName(),
-      tab: tab.getTemplateVariables()
+      tab: tab._getTemplateVariables()
     };
   }
 
@@ -50,7 +50,7 @@
    * Renders the region and inserts it into the application for display.
    */
   BaseRegion.prototype.render = function () {
-    var baseRegionContainer = vegas.tpl('baseRegionContainer', this.getTemplateVariables());
+    var baseRegionContainer = vegas.tpl('baseRegionContainer', this._getTemplateVariables());
     this.getView().getElement().html(baseRegionContainer);
   };
 

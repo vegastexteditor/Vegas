@@ -37,12 +37,12 @@
    * Gets the required variables in order to render the component into the
    * application.
    */
-  Component.prototype.getTemplateVariables = function () {
+  Component.prototype._getTemplateVariables = function () {
     // Gather up variables for the template
     var vars = {
       id: this.getId(),
       entity: this.getEntityName(),
-      //tab: tab.getTemplateVariables()
+      //tab: tab._getTemplateVariables()
     };
 
     return vars;
@@ -52,7 +52,7 @@
    * Renders the component and inserts it into the application for display.
    */
   Component.prototype.render = function () {
-    var componentContainer = vegas.tpl('componentContainer', this.getTemplateVariables());
+    var componentContainer = vegas.tpl('componentContainer', this._getTemplateVariables());
     this.getRegion().getElement().html(componentContainer);
   };
 
