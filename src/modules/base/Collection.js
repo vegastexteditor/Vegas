@@ -13,7 +13,7 @@
 
   function Collection() {
 
-    util.extend(this, new vegas.Base());
+    util.extend(this, new vegas._Base());
     this.length = 0;
 
     // Use common array methods

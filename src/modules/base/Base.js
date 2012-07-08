@@ -13,6 +13,6 @@
   function Base() {
   };
 
-  global.vegas.Base = Base;
+  global.vegas._Base = Base;
 
 })(this);
