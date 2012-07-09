@@ -26,9 +26,14 @@
 
           // create a method that runs the class method on each instance.
           self[classMethodName] = function () {
-            self.each(function (tab) {
-              tabClassMethods[classMethodName].call(tab);
-            });
+
+            // Safely iterate over the collection
+            var len = self.length;
+            var adjustedLen = 0; // The amount of change from the original length
+            for (var i = 0; i < len; i++) {
+              adjustedLen = len - self.length; // observe any changes in length
+              tabClassMethods[classMethodName].call(self[i - adjustedLen]);
+            }
           };
 
         })(classMethodName);
