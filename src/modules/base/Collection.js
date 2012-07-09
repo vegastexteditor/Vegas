@@ -11,6 +11,13 @@
   var vegas = global.vegas || {},
     util = vegas.util;
 
+  /**
+   * @class _Collection
+   * @memberOf vegas
+   * @extends vegas._Base
+   * @description Acts much like an array and is used as a base class of
+   * ObjectCollections
+   */
   function Collection() {
 
     util.extend(this, new vegas._Base());

@@ -48,6 +48,41 @@
     return jQuery(document.getElementById(this.getId()));
   };
 
+  Entity.prototype.getObjectFromElement = function (element) {
+    element = jQuery(element);
+
+    var elementId = element.attr('id')
+
+    var foundCollectionObject = false;
+    this.collection().each(function (collectionObject) {
+      if (collectionObject.getId() == elementId) {
+        foundCollectionObject = collectionObject;
+      }
+    });
+
+    return foundCollectionObject;
+
+  };
+
+  Entity.prototype.getFromAnElement = function (element) {
+    element = jQuery(element);
+    var found = false;
+    while (!found) {
+      if (element && element.is('.' + this.getSingularName())) {
+         found = true;
+      }
+      else if (element.is('body')) {
+        return false;
+      }
+      else {
+        element = element.parent();
+      }
+
+    }
+    return element;
+
+  };
+
   Entity.prototype.useSettings  = function (defaultSettings, options) {
     this._settings = util.extend(defaultSettings, options);
   };

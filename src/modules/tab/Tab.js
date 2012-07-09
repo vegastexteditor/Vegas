@@ -41,7 +41,7 @@
   Tab.prototype._getTemplateVariables = function () {
     // Gather up variables for the template
     var vars = {
-      title: this.settings('title'),
+      title: this.settings('title') + this.getId(),
       id: this.getId(),
       entity: this.getEntityName()
     };
@@ -51,6 +51,7 @@
 
   Tab.prototype.close = function () {
     this.collection().removeItem(this);
+    this.getElement().remove();
   };
 
   Tab.prototype._attachEvents = function () {
@@ -59,13 +60,19 @@
 
     this.getRegion().getElement().bind('click', function (e) {
       if (e.target.className === "close") {
-        self.trigger('beforeClose');
-        self.close();
-        self.trigger('close');
+        var tab = self.getObjectFromElement((self.getFromAnElement(e.target)));
+        if (tab) {
+          self.trigger('beforeClose');
+          tab.close();
+          self.trigger('close');
+        }
+        else {
+          console.error('could not get tab object from click');
+        }
       }
     });
 
-    this._attachedEvents = true;
+    this.collection()._attachedEvents = true;
   };
 
   /**
@@ -74,7 +81,7 @@
   Tab.prototype.render = function () {
     var tabContainer = vegas.tpl('tabContainer', this._getTemplateVariables());
     this.getRegion().getElement().find('.tabs').append(tabContainer);
-    if (!this._attachedEvents) {
+    if (!this.collection()._attachedEvents) {
       this._attachEvents();
     }
   };
