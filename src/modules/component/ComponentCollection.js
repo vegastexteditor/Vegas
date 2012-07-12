@@ -11,6 +11,7 @@
 
   function ComponentCollection() {
     util.extend(this, new vegas._ObjectCollection());
+    this._pluralizeMethods('_Component');
   };
 
   ComponentCollection.prototype.componentCollectionMethod = function () {

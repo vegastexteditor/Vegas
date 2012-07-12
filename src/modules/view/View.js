@@ -70,6 +70,27 @@
 
   };
 
+  View.prototype.tabs = function () {
+    if (!this._tabs) {
+      this._tabs= new global.vegas._TabCollection();
+    }
+    return this._tabs;
+  };
+
+  View.prototype.components = function () {
+    if (!this._components) {
+      this._components = new global.vegas._ComponentCollection();
+    }
+    return this._components;
+  };
+
+  View.prototype.regions = function () {
+    if (!this._regions) {
+      this._regions = new global.vegas._RegionCollection();
+    }
+    return this._regions;
+  };
+
   View.prototype.createRegion = function (options) {
       options = options || {};
       options.context = this.getContext();
@@ -125,8 +146,12 @@
   };
 
   View.prototype.setTitle = function (title) {
-    title = title || 'New Window ' +  this.collection().length;
-    this.getDocument().title = title;
+    this._title = title || 'New Window ' +  this.collection().length;
+    this.getDocument().title = this._title;
+  };
+
+  View.prototype.getTitle = function () {
+    return this._title;
   };
 
   // Closes the view window

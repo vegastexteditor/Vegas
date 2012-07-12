@@ -24,9 +24,26 @@
     // Add the object to the collection
     this.collection().add(this);
 
+    // Add region to the view's region collection
+    this.getView().regions().add(this);
+
     // Render the item to the application
     this.render();
 
+  };
+
+  Region.prototype.tabs = function () {
+    if (!this._tabs) {
+      this._tabs= new global.vegas._TabCollection();
+    }
+    return this._tabs;
+  };
+
+  Region.prototype.components = function () {
+    if (!this._components) {
+      this._components = new global.vegas._ComponentCollection();
+    }
+    return this._components;
   };
 
   Region.prototype.createComponent = function (options) {

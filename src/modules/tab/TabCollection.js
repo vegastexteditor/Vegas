@@ -14,34 +14,6 @@
     this._pluralizeMethods('_Tab');
   };
 
-  TabCollection.prototype._pluralizeMethods = function (className) {
-    var self = this;
-    var tabClassMethods = vegas[className].prototype;
-    // Loop through class methods
-    for (var classMethodName in tabClassMethods) {
-      // and find public methods only
-      if (classMethodName.indexOf('_') !== 0) {
-
-        (function (classMethodName) {
-
-          // create a method that runs the class method on each instance.
-          self[classMethodName] = function () {
-
-            // Safely iterate over the collection
-            var len = self.length;
-            var adjustedLen = 0; // The amount of change from the original length
-            for (var i = 0; i < len; i++) {
-              adjustedLen = len - self.length; // observe any changes in length
-              tabClassMethods[classMethodName].call(self[i - adjustedLen]);
-            }
-          };
-
-        })(classMethodName);
-
-     }
-    }
-  };
-
   TabCollection.prototype.tabCollectionMethod = function () {
     console.log('tabCollectionMethod');
   };

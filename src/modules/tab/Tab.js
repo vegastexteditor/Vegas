@@ -34,6 +34,19 @@
 
   };
 
+  Tab.prototype.getComponent = function () {
+    return this._component;
+  };
+
+  Tab.prototype.setTitle = function (title) {
+    this.settings('title', title);
+    this.getElement().find('.title').html(title);
+  },
+
+  Tab.prototype.getTitle = function () {
+    return this.settings('title');
+  };
+
   /**
    * Gets the required variables in order to render the tab into the
    * application.

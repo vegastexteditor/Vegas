@@ -11,19 +11,11 @@
 
   function RegionCollection() {
     util.extend(this, new vegas._ObjectCollection());
+    this._pluralizeMethods('_Region');
   };
 
-  RegionCollection.prototype.getObject = function (id) {
-    var self = this;
-
-    this.each(function (item) {
-      if (item.getId() == id) {
-        return item;
-      }
-    });
-
-    return false;
-
+  RegionCollection.prototype.regionCollectionMethod = function () {
+    console.log('regionCollectionMethod');
   };
 
   global.vegas._RegionCollection = RegionCollection;

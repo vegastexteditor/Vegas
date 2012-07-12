@@ -21,6 +21,10 @@
     return _.extend(obj1, obj2);
   };
 
+  util.isArray = function (array) {
+    return _(array).isArray();
+  };
+
   util.pluralize = function(string, count) {
     if (count == 1) {
       return string;

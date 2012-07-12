@@ -11,16 +11,11 @@
 
   function ViewsCollection() {
     util.extend(this, new vegas._ObjectCollection());
+    this._pluralizeMethods('View');
   };
 
-  ViewsCollection.prototype.close = function () {
-    for (var i = 0; i < this.length; i++) {
-      this[i].close();
-      // update the length because its changing as we remove items from the
-      // collection, otherwise it will seem weird and delete odd numbers and
-      // stuff
-      i--;
-    }
+  ViewsCollection.prototype.viewCollectionMethod = function () {
+    console.log('viewCollectionMethod');
   };
 
   global.vegas._ViewsCollection = ViewsCollection;
