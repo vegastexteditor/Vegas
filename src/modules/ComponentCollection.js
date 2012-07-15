@@ -2,16 +2,11 @@ define(function(require, exports, module) {
   "use strict";
 
   var EntityCollection = require('EntityCollection');
+  var utils = require('utils');
 
-  function ComponentCollection() {
-
+  function ComponentCollection(options) {
+    utils.extend(this, new EntityCollection(options));
   }
-
-  ComponentCollection.prototype = new EntityCollection();
-
-  ComponentCollection.prototype.hi = function () {
-    console.log('hi');
-  };
 
   return ComponentCollection;
 

@@ -2,19 +2,18 @@ define(function(require, exports, module) {
   "use strict";
 
   var utils = require('utils');
-  var vegas = require('vegas');
 
   function Entity(name, options) {
 
     this.setName(name);
+
+    this.setContextInfo(this.getSingularName(), options);
 
     this.setId();
 
     this.settings('collection', this.getPluralName());
 
     this.collection().add(this);
-
-    this.setContextInfo(this.getSingularName(), options);
 
   }
 
@@ -184,12 +183,11 @@ define(function(require, exports, module) {
    * The collection the entity belongs to
    */
   Entity.prototype.collection = function () {
-    console.log('must be able to access the collection');
-    debugger;
+    var vegas = this.getContext('vegas');
     var collectionName = utils.pluralize(this.getName()).toLowerCase();
 
-    if (collectionName in vegas) {
-      return vegas[collectionName];
+    if (collectionName in vegas && typeof(vegas[collectionName]) == 'function') {
+      return vegas[collectionName]();
     }
     else {
       console.error('Could not get collection for' + this.entityName);

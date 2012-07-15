@@ -3,15 +3,9 @@ define(function(require, exports, module) {
 
   var EntityCollection = require('EntityCollection');
 
-  function RegionCollection() {
-
+  function RegionCollection(options) {
+    utils.extend(this, new EntityCollection(options));
   }
-
-  RegionCollection.prototype = new EntityCollection();
-
-  RegionCollection.prototype.hi = function () {
-    console.log('hi');
-  };
 
   return RegionCollection;
 

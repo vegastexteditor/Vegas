@@ -13,14 +13,14 @@
         settings: '/src/settings',
         vegas: '/src/vegas',
         'libraries/underscore': '/src/libraries/underscore/underscore'
-      }
-    });
-    require(['vegas'], function (vegas) {
-        // Get the global object (e.g. window object)
-        global = (function(){return this;}());
+      },
+      callback: function () {
 
-        // Apply the vegas object instance to the global object.
-        global.vegas = vegas;
+        require(['vegas'], function (vegas) {
+          console.log(vegas);
+        });
+
+      }
     });
   </script>
 

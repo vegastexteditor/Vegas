@@ -1,12 +1,20 @@
 define(function(require, exports, module) {
   "use strict";
 
-  function EntityCollection() {
+  var Collection = require('Collection');
+  var utils = require('utils');
 
+  function EntityCollection(context) {
+    utils.extend(this, new Collection());
+    //this._context = context;
   }
 
-  EntityCollection.prototype.sup = function () {
-    console.log('sup');
+  EntityCollection.prototype.getContext = function (contextName) {
+    return this._context[contextName];
+  };
+
+  EntityCollection.prototype.add = function () {
+    var vegas = this.getContext('vegas');
   };
 
   return EntityCollection;

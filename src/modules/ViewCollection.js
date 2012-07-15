@@ -2,16 +2,11 @@ define(function(require, exports, module) {
   "use strict";
 
   var EntityCollection = require('EntityCollection');
+  var utils = require('utils');
 
-  function ViewCollection() {
-
+  function ViewCollection(context) {
+    utils.extend(this, new EntityCollection(context));
   }
-
-  ViewCollection.prototype = new EntityCollection();
-
-  ViewCollection.prototype.hi = function () {
-    console.log('hi');
-  };
 
   return ViewCollection;
 

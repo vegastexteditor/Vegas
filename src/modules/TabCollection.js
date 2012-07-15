@@ -3,15 +3,9 @@ define(function(require, exports, module) {
 
   var EntityCollection = require('EntityCollection');
 
-  function TabCollection() {
-
+  function TabCollection(options) {
+    utils.extend(this, new EntityCollection(options));
   }
-
-  TabCollection.prototype = new EntityCollection();
-
-  TabCollection.prototype.hi = function () {
-    console.log('hi');
-  };
 
   return TabCollection;
 
