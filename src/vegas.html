@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+  <title>Vegas</title>
+  <style type="style/css">@import url("./assets/stylesheets/vegas.css");</style>
+  <script type="text/javascript" src="libraries/require/require.js"></script>
+  <script type="text/javascript">
+    var require = require.config({
+      // most module definitions are here
+      baseUrl: "./modules/",
+      paths: {
+        flavors: '/src/flavors',
+        settings: '/src/settings',
+        vegas: '/src/vegas',
+        'libraries/underscore': '/src/libraries/underscore/underscore'
+      }
+    });
+    require(['vegas'], function (vegas) {
+        // Get the global object (e.g. window object)
+        global = (function(){return this;}());
+
+        // Apply the vegas object instance to the global object.
+        global.vegas = vegas;
+    });
+  </script>
+
+
+</head>
+<body>
+</body>
+</html>
