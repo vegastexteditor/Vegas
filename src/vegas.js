@@ -3,11 +3,11 @@ define(function(require, exports, module) {
   var global = (function() {return this;})();
 
   // Gather up dependencies
-  var ViewCollection  = require('ViewCollection');
-  var RegionCollection  = require('RegionCollection');
-  var ComponentCollection = require('ComponentCollection');
-  var TabCollection = require('TabCollection');
-  var View = require('View');
+  var ViewCollection  = require('view/ViewCollection');
+  var RegionCollection  = require('region/RegionCollection');
+  var ComponentCollection = require('component/ComponentCollection');
+  var TabCollection = require('tab/TabCollection');
+  var View = require('view/View');
   var Settings = require('Settings'); // @TODO: require settings.json instead.
 
   // Provide the application object

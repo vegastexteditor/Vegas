@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
   "use strict";
 
-  var EntityCollection = require('EntityCollection');
+  var EntityCollection = require('base/EntityCollection');
   var utils = require('utils');
 
   function ViewCollection(context) {

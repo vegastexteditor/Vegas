@@ -4,13 +4,10 @@ define(function(require, exports, module) {
   var Entity = require('Entity');
   var utils = require('utils');
 
-  function View(options, vegas) {
+  function Tab(options) {
     utils.extend(this, new Entity(this.constructor.name, options));
-
-    // Add the object to the collection
-    //this.collection().add(this);
   }
 
-  return View;
+  return Tab;
 
 });
