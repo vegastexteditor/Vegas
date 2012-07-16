@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
   "use strict";
 
-  require('libraries/underscore');
+  require('underscore');
 
   var utils = {};
 

@@ -5,7 +5,7 @@ define(function(require, exports, module) {
   var utils = require('utils');
 
   function View(options) {
-    utils.extend(this, new Entity(this.constructor.name, options));
+    utils.extend(this, new Entity('View',  options));
   }
 
   return View;

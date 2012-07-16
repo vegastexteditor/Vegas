@@ -1,2 +1,2 @@
-npm install jshint
-npm install jake
+npm install -g jshint
+npm install -g jake

@@ -2,34 +2,7 @@
 <html>
 <head>
   <title>Vegas</title>
-  <style type="style/css">@import url("./assets/stylesheets/vegas.css");</style>
-  <script type="text/javascript" src="libraries/require/require.js"></script>
-  <script type="text/javascript">
-    var require = require.config({
-      // most module definitions are here
-      baseUrl: "./modules/",
-      paths: {
-        flavors: '/src/flavors',
-        settings: '/src/settings',
-        base: '/src/modules/base',
-        component: '/src/modules/component',
-        region: '/src/modules/region',
-        tab: '/src/modules/tab',
-        view: '/src/modules/view',
-        vegas: '/src/vegas',
-        'libraries/underscore': '/src/libraries/underscore/underscore'
-      },
-      callback: function () {
-
-        require(['vegas'], function (vegas) {
-          console.log(vegas);
-        });
-
-      }
-    });
-  </script>
-
-
+  <script data-main="main" src="libraries/require/require.js"></script>
 </head>
 <body>
 </body>
