@@ -1,16 +1,10 @@
 var require = require.config({
   // most module definitions are here
-  baseUrl: "./modules/",
+  baseUrl: "modules",
   paths: {
-    flavors: '/src/flavors',
-    settings: '/src/settings',
-    base: '/src/modules/base',
-    component: '/src/modules/component',
-    region: '/src/modules/region',
-    tab: '/src/modules/tab',
-    view: '/src/modules/view',
-    vegas: '/src/vegas',
-    underscore: '/src/libraries/underscore/underscore'
+    flavors: 'flavors',
+    vegas: '../vegas',
+    underscore: '../libraries/underscore/underscore'
   }
 });
 
