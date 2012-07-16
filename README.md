@@ -7,18 +7,19 @@ Vegas Text Editor
 
 Check It Out
 =====================
-  view it <a href="http://www.code.editor.vegasjs.com/master/src/vegas.html">online</a>
-  view your <a href="src/vegas.html">local copy</a>
-  or download the compiled <a href="http://download.editor.vegasjs.com/">version</a> here.
+  View it <a href="http://www.code.editor.vegasjs.com/master/src/vegas.html">online</a>,
+  view your <a href="src/vegas.html">local copy</a>,
+  or download the <a href="http://download.editor.vegasjs.com/">compiled version</a>.
 
 Status
 =====================
-* Completed Working prototype: http://bit.ly/vegasprototype (Chrome seems to work)
-* Built out rough skeleton of new architecture (will be evolving of course)
-* Working on a robust GUI
+* Completed <a href="http://bit.ly/vegasprototype">editor prototype</a> (Chrome seems to work)
+* Built out rough skeleton of new architecture
+* Worked on a robust GUI
 * Figured out most of the new architecture, documentation pending.
-* Creating new "clean" branch removing unused code, etc.
+* Refactoring given lessons learned from robust GUI, Creating new "clean" branch removing unused code, etc.
 * Converting GUI work to the new branch
+* Converting objects to requirejs for dependency management
 
 Authors
 =====================
