@@ -1,12 +1,4 @@
-var require = require.config({
-  // most module definitions are here
-  baseUrl: "modules",
-  paths: {
-    flavors: 'flavors',
-    vegas: '../vegas',
-    underscore: '../libraries/underscore/underscore'
-  }
-});
+var require = require.config(commonRequireConfig);
 
 require(['vegas'], function (vegas) {
   // once loaded, say hello

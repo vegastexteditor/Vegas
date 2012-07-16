@@ -1,39 +1,40 @@
-pavlov.specify.globalApi = true;
+require(['view/View', 'view/ViewCollection'], function (View, ViewCollection) {
 
-pavlov.specify.extendAssertions({
-    exists: function(value, expected, message) {
-        ok(true, message);
-    },
-    isGreaterThan: function(actual, expected, message) {
-        ok(actual > expected, message);
-    },
-    isLessThan: function(actual, expected, message) {
-        ok(actual < expected, message);
-    }
-});
+  pavlov.specify.globalApi = true;
 
-pavlov.specify("View", function(){
+  pavlov.specify.extendAssertions({
+      exists: function(value, expected, message) {
+          ok(true, message);
+      },
+      isGreaterThan: function(actual, expected, message) {
+          ok(actual > expected, message);
+      },
+      isLessThan: function(actual, expected, message) {
+          ok(actual < expected, message);
+      }
+  });
 
-  describe("With a view", function () {
+  pavlov.specify("View", function(){
 
-    var view;
+    describe("When creating a single view", function () {
 
-    before(function () {
-    });
+      var view;
+      before(function () {
 
-    it("views exist in vegas object", async(function () {
+        // Mock collection in global object.
+        window.vegas = {};
+        vegas.views = function () {
+          if (!this._views) this._views = new ViewCollection({vegas: vegas});
+          return this._views;
+        };
 
-      var template = new vegas.Template('viewContainer');
-
-      template.on('load', function () {
-        view = new vegas.View();
-        assert(vegas.View).exists();
+        view = new View({context: {vegas: window.vegas}});
       });
 
-    }));
+      it('should have a collection length of one', function () {
+        assert(view.collection().length).equals(1);
+      });
 
-    after(function () {
-      delete view;
     });
 
   });

@@ -7,12 +7,14 @@
 
   commonRequireConfig.baseUrl = '../src/modules';
   commonRequireConfig.paths.CollectionSpec = '../../spec/Collection.specs';
+  commonRequireConfig.paths.ViewCollectionSpec = '../../spec/ViewCollection.specs';
 
   var require = require.config(commonRequireConfig);
 
-  require(['CollectionSpec', 'base/Collection'], function (CollectionSpec, Collection) {
-      // Run Collection spec on Collection object.
-      CollectionSpec(Collection);
+  require(['CollectionSpec', 'ViewCollectionSpec', 'view/ViewCollection'], function (CollectionSpec, ViewCollectionSpec, ViewCollection) {
+      // Run Collection spec on ViewCollection object.
+      CollectionSpec(ViewCollection);
+      ViewCollectionSpec(ViewCollection);
   });
 
 </script>

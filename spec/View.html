@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="../src/common/requireConfig.js"></script>
+<script src="../src/libraries/require/require.js"></script>
+<script>
+
+  commonRequireConfig.baseUrl = '../src/modules';
+  commonRequireConfig.paths.ViewSpec = '../../spec/View.specs';
+
+  var require = require.config(commonRequireConfig);
+
+  require(['ViewSpec'], function () {
+      console.log('cool cool cool');
+  });
+
+</script>
+
 <script type="text/javascript" src="../lib/qunit/qunit.js"></script>
 <script type="text/javascript" src="../lib/pavlov/pavlov.js"></script>
-<script type="text/javascript" src="../src/library/underscore/underscore.js"></script>
-<script type="text/javascript" src="../src/modules/util/util.js"></script>
-<script type="text/javascript" src="../src/library/jquery/jquery.js"></script>
-<script type="text/javascript" src="../src/library/mustache/mustache.js"></script>
-<script type="text/javascript" src="../src/modules/base/Collection.new.js"></script>
-<script type="text/javascript" src="../src/modules/base/Entity.js"></script>
-<script type="text/javascript" src="../src/modules/template/Template.js"></script>
-<script type="text/javascript" src="../src/modules/template/templates.js"></script>
-<script type="text/javascript" src="../src/modules/view/View.new.js"></script>
 
-<script type="text/javascript" src="View.specs.js"></script>
 <link rel="stylesheet" href="../lib/qunit/qunit.css" type="text/css" media="screen" />
 </head>
 <body>
