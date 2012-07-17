@@ -13,8 +13,6 @@ define(function(require, exports, module) {
 
     this.settings('collection', this.getPluralName());
 
-    this.collection().add(this);
-
   }
 
   /**
@@ -79,6 +77,11 @@ define(function(require, exports, module) {
 
   Entity.prototype.settings = function (setting, settingValue) {
     this._settings = this._settings || {};
+
+    if (setting == undefined && settingValue == undefined) {
+      return this._settings;
+    }
+
     if (settingValue !== undefined) {
       this._settings[setting] = settingValue;
     }

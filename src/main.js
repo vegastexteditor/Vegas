@@ -1,9 +1,14 @@
 var requireConfig = {
   baseUrl: "modules",
   paths: {
-    flavors: 'flavors',
+    flavors: '../flavors',
     vegas: '../vegas',
-    underscore: '../libraries/underscore/underscore'
+    underscore: '../libraries/underscore/underscore',
+    jquery: '../libraries/jquery/jquery',
+    mustache: '../libraries/mustache/mustache',
+    less: '../libraries/less/less',
+    settings: '../settings'
+
   }
 };
 

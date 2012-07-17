@@ -2,6 +2,7 @@ define(function(require, exports, module) {
   "use strict";
 
   require('underscore');
+  require('mustache');
 
   var utils = {};
 
@@ -14,6 +15,12 @@ define(function(require, exports, module) {
   };
 
   utils.error = function (message) {
+    // Pretty message.
+    console.error(message); // See expand stacktrace for original error location.
+    throw message; // Stop execution
+  };
+
+  utils.debug = function (message) {
     console.trace();
     throw message;
   };
@@ -59,6 +66,20 @@ define(function(require, exports, module) {
       exit();
     }
     return string.charAt(0).toUpperCase() + string.slice(1);
+  };
+
+  utils.tpl = function (templateName, templateData) {
+    vegas.templates = vegas.templates || {};
+    var template = vegas.templates[templateName] || {};
+
+    if (templateName in vegas.templates) {
+      return Mustache.render(template, templateData);
+    }
+    else {
+      utils.error('Could not find template: ' + templateName);
+      return false;
+    }
+
   };
 
   return utils;

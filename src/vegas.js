@@ -19,7 +19,6 @@ define(function(require, exports, module) {
   /** Public Properties */
   vegas.settings = settings;
 
-
   /** Public Methods */
 
   // Gather up the current context object for collection methods below.
