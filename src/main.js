@@ -7,6 +7,7 @@ var requireConfig = {
     jquery: '../libraries/jquery/jquery',
     mustache: '../libraries/mustache/mustache',
     less: '../libraries/less/less',
+    LAB: '../libraries/LAB/LAB',
     settings: '../settings'
 
   }
