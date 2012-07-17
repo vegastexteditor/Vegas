@@ -43,20 +43,20 @@ define(function(require, exports, module) {
       // Render the window
       self.render();
 
-      // Insert a region into the view
-      var region = self.createRegion({
-        regionSetting1: 'regionSetting1Value'
-      });
+      //// Insert a region into the view
+      //var region = self.createRegion({
+        //regionSetting1: 'regionSetting1Value'
+      //});
 
-      // Insert a component into the region
-      var component = region.createComponent({
-        title: 'title1'
-      });
+      //// Insert a component into the region
+      //var component = region.createComponent({
+        //title: 'title1'
+      //});
 
-      // Insert a component into the region
-      var component = region.createComponent({
-        title: 'title2'
-      });
+      //// Insert a component into the region
+      //var component = region.createComponent({
+        //title: 'title2'
+      //});
 
     });
 

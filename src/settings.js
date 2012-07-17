@@ -11,6 +11,8 @@ define(function(require, exports, module) {
 
   settings.exampleSetting = 'Example Setting';
 
+  settings.theme = 'default';
+
   /** END USER SETTINGS **/
 
   // Notate that the user settings have been read.

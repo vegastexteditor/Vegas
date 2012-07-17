@@ -2,6 +2,7 @@ define(function(require, exports, module) {
 
   var global = (function() {return this;})();
 
+
   // Gather up dependencies
   var ViewCollection  = require('view/ViewCollection');
   var RegionCollection  = require('region/RegionCollection');
@@ -9,6 +10,7 @@ define(function(require, exports, module) {
   var TabCollection = require('tab/TabCollection');
   var View = require('view/View');
   var Settings = require('Settings'); // @TODO: require settings.json instead.
+  var Theme = require('theme/Theme');
 
   // Provide the application object
   global.vegas = {};
@@ -18,6 +20,9 @@ define(function(require, exports, module) {
 
   /** Public Properties */
   vegas.settings = settings;
+
+  vegas.theme = new Theme(settings.theme);
+
 
   /** Public Methods */
 
@@ -58,11 +63,13 @@ define(function(require, exports, module) {
     return _tabs;
   };
 
-  /** Create a new view */
-  new vegas.View();
+  vegas.theme.on('ready', function () {
+    /** Create a new view */
+    new vegas.View();
 
-  /** Create a new view */
-  new vegas.View();
+    /** Create a new view */
+    new vegas.View();
+  });
 
   return global.vegas;
 
