@@ -1,7 +1,7 @@
 define(function(require, exports, module) {
   "use strict";
 
-  var utils = require('utils');
+  var util = require('util');
 
   /**
    * @class _Collection
@@ -14,7 +14,7 @@ define(function(require, exports, module) {
 
     this.length = 0;
 
-    if (utils.isArray(items)) {
+    if (util.isArray(items)) {
       for (var i = 0; i < items.length; i++) {
         this.add(items[i]);
       }
@@ -23,10 +23,10 @@ define(function(require, exports, module) {
     // For console to recognize as an array
     this.splice = Array.prototype.splice;
 
-  };
+  }
 
   Collection.prototype.add = function (item) {
-    if (utils.isArray(item)) {
+    if (util.isArray(item)) {
       var items = item;
       for (var i = 0; i < items.length; i++) {
         this._add(items[i]);
@@ -52,7 +52,7 @@ define(function(require, exports, module) {
       }
     } else {
       for (var key in obj) {
-        if (hasOwnProperty.call(obj, key)) {
+        if (obj.hasOwnProperty.call(obj, key)) {
           if (iterator.call(context, obj[key], key, obj) === {}) return;
         }
       }

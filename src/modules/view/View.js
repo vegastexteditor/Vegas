@@ -2,19 +2,19 @@ define(function(require, exports, module) {
   "use strict";
 
   var Entity = require('base/Entity');
-  var utils = require('utils');
+  var util = require('util');
   var $ = require('jquery');
 
   function View(options) {
     // extend Entity class for common methods
-    utils.extend(this, new Entity('View',  options));
+    util.extend(this, new Entity('View',  options));
 
     // Merge in default settings with provided options into the objects settings
     this.useSettings({
       // Whether or not to use the window the script is running in.
       useBaseWindow: false,
      // Changed if / when the window is opened, otherwise use primary window
-      windowContext: window
+      windowContext: (function(){return this;}())
     }, options);
 
     // If first param is false, do not open a window, use the original vegas
@@ -32,13 +32,13 @@ define(function(require, exports, module) {
     else {
       // We are using a window thats already open, so its ready.
       this.trigger('load');
-      console.info('Using current window for view');
+      util.info('Using current window for view');
     }
 
     var self = this;
     // When the view window has loaded.
     this.on('load', function () {
-      console.info('View loaded');
+      util.info('View loaded');
 
       // Render the window
       self.render();
@@ -67,20 +67,22 @@ define(function(require, exports, module) {
 
   // Opens the view window
   View.prototype._openWindow = function () {
-    var options = 'width=200,height=100'
-    var win = window.open('view.html?' + Math.random(0,9), this.name, options);
+    var win = this.getWindow();
+    var options = 'width=200,height=100';
+    var _win = win.open('view.html?' + Math.random(0,9), this.name, options);
     // Let the view know about the new window reference
-    this._setContext('window', win);
+    this._setContext('window', _win);
   };
 
   // Closes the view window
   View.prototype.close = function () {
-    this.getWindow().close();
+    var win = this.getWindow();
+    win.close();
     vegas.views.remove(this);
 
     var self = this;
-    setTimeout(function () {
-      console.log(self);
+    win.setTimeout(function () {
+      util.log(self);
     }, 500);
 
   };
@@ -100,7 +102,7 @@ define(function(require, exports, module) {
 
     var body = jQuery(this.getDocument().body);
 
-    var viewContainer = utils.tpl('viewContainer', this._getTemplateVariables());
+    var viewContainer = util.tpl('viewContainer', this._getTemplateVariables());
 
     body.html(viewContainer);
   };
@@ -126,14 +128,11 @@ define(function(require, exports, module) {
     // Gather up variables for the template
     var vars = {
       id: this.getId(),
-      entity: this.getEntityName(),
-      //tab: tab._getTemplateVariables()
+      entity: this.getEntityName()
     };
 
     return vars;
-  }
-
-
+  };
 
   return View;
 

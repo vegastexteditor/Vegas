@@ -2,10 +2,10 @@ define(function(require, exports, module) {
   "use strict";
 
   var Entity = require('base/Entity');
-  var utils = require('utils');
+  var util = require('util');
 
   function Component(options) {
-    utils.extend(this, new Entity('Entity', options));
+    util.extend(this, new Entity('Entity', options));
   }
 
   return Component;

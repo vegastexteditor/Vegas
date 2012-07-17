@@ -60,7 +60,9 @@ define(function(require, exports, module) {
 
       (function (templateName) {
 
-        templateFile = 'themes/' + themeName + '/templates/' + templateName + '.html?' + +new Date();
+        var time = (+new Date());
+
+        templateFile = 'themes/' + themeName + '/templates/' + templateName + '.html?' + time;
 
          jQuery.ajax({
            url: templateFile,

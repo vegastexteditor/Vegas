@@ -4,28 +4,30 @@ define(function(require, exports, module) {
   require('underscore');
   require('mustache');
 
-  var utils = {};
+  var util = {};
 
-  utils.extend = function (obj1, obj2) {
+  util.extend = function (obj1, obj2) {
     return _.extend(obj1, obj2);
   };
 
-  utils.isArray = function (array) {
+  util.isArray = function (array) {
     return _(array).isArray();
   };
 
-  utils.error = function (message) {
+  util.error = function (message) {
     // Pretty message.
+    var console = console || {error: function() {}};
     console.error(message); // See expand stacktrace for original error location.
     throw message; // Stop execution
   };
 
-  utils.debug = function (message) {
+  util.debug = function (message) {
+    var console = console || {trace: function() {}};
     console.trace();
     throw message;
   };
 
-  utils.generateId = function () {
+  util.generateId = function () {
 
     var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split(''),
       uuid = new Array(36),
@@ -52,7 +54,7 @@ define(function(require, exports, module) {
     return uuid.join('');
   };
 
-  utils.pluralize = function(string, count) {
+  util.pluralize = function(string, count) {
     if (count == 1) {
       return string;
     }
@@ -61,14 +63,11 @@ define(function(require, exports, module) {
     }
   };
 
-  utils.capitalize = function (string) {
-    if (!string) {
-      exit();
-    }
+  util.capitalize = function (string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
-  utils.tpl = function (templateName, templateData) {
+  util.tpl = function (templateName, templateData) {
     vegas.templates = vegas.templates || {};
     var template = vegas.templates[templateName] || {};
 
@@ -76,11 +75,11 @@ define(function(require, exports, module) {
       return Mustache.render(template, templateData);
     }
     else {
-      utils.error('Could not find template: ' + templateName);
+      util.error('Could not find template: ' + templateName);
       return false;
     }
 
   };
 
-  return utils;
+  return util;
 });

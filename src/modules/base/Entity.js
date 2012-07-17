@@ -1,7 +1,9 @@
 define(function(require, exports, module) {
   "use strict";
 
-  var utils = require('utils');
+  require('jquery');
+
+  var util = require('util');
 
   function Entity(name, options) {
 
@@ -19,7 +21,7 @@ define(function(require, exports, module) {
    * Get a nifty looking unique identifier
    */
   Entity.prototype.setId = function () {
-    this._id = utils.generateId();
+    this._id = util.generateId();
   };
 
   /**
@@ -33,13 +35,14 @@ define(function(require, exports, module) {
    * Retrieve the entities element
    */
   Entity.prototype.getElement = function () {
-    return jQuery(document.getElementById(this.getId()));
+    // @TODO: use getContext to get the document.
+    return $(document.getElementById(this.getId()));
   };
 
   Entity.prototype.getObjectFromElement = function (element) {
-    element = jQuery(element);
+    element = $(element);
 
-    var elementId = element.attr('id')
+    var elementId = element.attr('id');
 
     var foundCollectionObject = false;
     this.collection().each(function (collectionObject) {
@@ -53,7 +56,7 @@ define(function(require, exports, module) {
   };
 
   Entity.prototype.getFromAnElement = function (element) {
-    element = jQuery(element);
+    element = $(element);
     var found = false;
     while (!found) {
       if (element && element.is('.' + this.getSingularName())) {
@@ -72,13 +75,13 @@ define(function(require, exports, module) {
   };
 
   Entity.prototype.useSettings  = function (defaultSettings, options) {
-    this._settings = utils.extend(defaultSettings, options);
+    this._settings = util.extend(defaultSettings, options);
   };
 
   Entity.prototype.settings = function (setting, settingValue) {
     this._settings = this._settings || {};
 
-    if (setting == undefined && settingValue == undefined) {
+    if (setting === undefined && settingValue === undefined) {
       return this._settings;
     }
 
@@ -128,7 +131,7 @@ define(function(require, exports, module) {
   Entity.prototype._createContextGetter = function (contextName) {
     // Provide a getter on the entity for each context that has been set
     // .getWindow(), .getView(), .getComponent(), .getTab(), etc
-    this['get' + utils.capitalize(contextName)] = function () {
+    this['get' + util.capitalize(contextName)] = function () {
       return this.getContext(contextName);
     };
   };
@@ -146,7 +149,7 @@ define(function(require, exports, module) {
   };
 
   Entity.prototype.setEntityName = function (entityName) {
-    this._entityName = entityName
+    this._entityName = entityName;
   };
 
   Entity.prototype.getContext = function (contextName) {
@@ -174,11 +177,11 @@ define(function(require, exports, module) {
       return false;
     }
     else {
-      console.log('no context provided to object');
+      util.log('no context provided to object');
       return false;
     }
 
-    console.warn('uncaught logic');
+    util.warn('uncaught logic');
 
   };
 
@@ -187,13 +190,13 @@ define(function(require, exports, module) {
    */
   Entity.prototype.collection = function () {
     var vegas = this.getContext('vegas');
-    var collectionName = utils.pluralize(this.getName()).toLowerCase();
+    var collectionName = util.pluralize(this.getName()).toLowerCase();
 
     if (collectionName in vegas && typeof(vegas[collectionName]) == 'function') {
       return vegas[collectionName]();
     }
     else {
-      console.error('Could not get collection for' + this.entityName);
+      util.error('Could not get collection for' + this.entityName);
       return false;
     }
   };
@@ -203,7 +206,7 @@ define(function(require, exports, module) {
   };
 
   Entity.prototype.getPluralName = function () {
-    return utils.pluralize(this.getSingularName(), 2);
+    return util.pluralize(this.getSingularName(), 2);
   };
 
   Entity.prototype.setName = function (name) {
@@ -212,7 +215,7 @@ define(function(require, exports, module) {
 
   Entity.prototype.getName = function () {
     return  this._name || false;
-  }
+  };
 
   Entity.prototype.trigger = function (event) {
     this._on = this._on || {};

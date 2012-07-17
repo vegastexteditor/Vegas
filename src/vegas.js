@@ -2,7 +2,6 @@ define(function(require, exports, module) {
 
   var global = (function() {return this;})();
 
-
   // Gather up dependencies
   var ViewCollection  = require('view/ViewCollection');
   var RegionCollection  = require('region/RegionCollection');
@@ -22,7 +21,6 @@ define(function(require, exports, module) {
   vegas.settings = settings;
 
   vegas.theme = new Theme(settings.theme);
-
 
   /** Public Methods */
 
