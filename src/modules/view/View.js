@@ -14,7 +14,7 @@ define(function(require, exports, module) {
       // Whether or not to use the window the script is running in.
       useBaseWindow: false,
      // Changed if / when the window is opened, otherwise use primary window
-      windowContext: (function(){return this;}())
+      windowContext: window // (function(){return this;}())
     }, options);
 
     // If first param is false, do not open a window, use the original vegas

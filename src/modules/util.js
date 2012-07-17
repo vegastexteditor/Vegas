@@ -14,6 +14,12 @@ define(function(require, exports, module) {
     return _(array).isArray();
   };
 
+  util.info = function (message) {
+    // Pretty message.
+    var console = console || {info: function() {}};
+    console.info(message); // See expand stacktrace for original error location.
+  };
+
   util.error = function (message) {
     // Pretty message.
     var console = console || {error: function() {}};
