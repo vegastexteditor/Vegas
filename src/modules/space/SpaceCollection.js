@@ -4,10 +4,10 @@ define(function(require, exports, module) {
   var EntityCollection = require('base/EntityCollection');
   var util = require('util');
 
-  function ComponentCollection(vegas, options) {
-    util.extend(this, new EntityCollection(vegas, options));
+  function SpaceCollection(context) {
+    util.extend(this, new EntityCollection(context));
   }
 
-  return ComponentCollection;
+  return SpaceCollection;
 
 });

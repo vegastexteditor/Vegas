@@ -2,12 +2,13 @@ define(function(require, exports, module) {
   "use strict";
 
   var Entity = require('base/Entity');
+  var Space = require('space/Space');
   var util = require('util');
   var $ = require('jquery');
 
-  function View(options) {
+  function View(vegasObject, options) {
     // extend Entity class for common methods
-    util.extend(this, new Entity('View',  options));
+    util.extend(this, new Entity('View', vegasObject, options));
 
     // Merge in default settings with provided options into the objects settings
     this.useSettings({
@@ -63,6 +64,7 @@ define(function(require, exports, module) {
     // Add the object to the collection
     this.collection().add(this);
 
+    this.collection()._pluralizeMethods(this);
   }
 
   // Opens the view window
@@ -76,9 +78,20 @@ define(function(require, exports, module) {
 
   // Closes the view window
   View.prototype.close = function () {
+    var self = this;
+
     var win = this.getWindow();
     win.close();
-    vegas.views.remove(this);
+
+    var vegas = this.getContext('vegas');
+
+    // Remove the view elements
+    vegas.views().each(function (view) {
+      view.getElement().remove();
+    });
+
+    // Remove the view instances from the collection object.
+    vegas.views().removeAll();
 
     var self = this;
     win.setTimeout(function () {

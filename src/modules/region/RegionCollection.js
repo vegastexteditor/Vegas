@@ -4,8 +4,8 @@ define(function(require, exports, module) {
   var EntityCollection = require('base/EntityCollection');
   var util = require('util');
 
-  function RegionCollection(options) {
-    util.extend(this, new EntityCollection(options));
+  function RegionCollection(vegas, options) {
+    util.extend(this, new EntityCollection(vegas, options));
   }
 
   return RegionCollection;

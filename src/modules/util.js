@@ -33,6 +33,11 @@ define(function(require, exports, module) {
     throw message;
   };
 
+  util.log = function (message) {
+    var console = console || {log: function() {}};
+    console.log(message);
+  };
+
   util.generateId = function () {
 
     var chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'.split(''),

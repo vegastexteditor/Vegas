@@ -5,11 +5,14 @@ define(function(require, exports, module) {
 
   var util = require('util');
 
-  function Entity(name, options) {
+  function Entity(name, object, options) {
+
+    options = options || {};
 
     this.setName(name);
 
-    this.setContextInfo(this.getSingularName(), options);
+    this.useContextFrom(object);
+    this._setContext(this.getSingularName(), this, true);
 
     this.setId();
 
@@ -134,6 +137,23 @@ define(function(require, exports, module) {
     this['get' + util.capitalize(contextName)] = function () {
       return this.getContext(contextName);
     };
+  };
+
+  Entity.prototype.useContextFrom = function (object) {
+    var contextName;
+
+    var objectContext;
+    if (typeof(object.getContext) == 'function') {
+      objectContext = object.getContext();
+    }
+    else {
+      objectContext = object._context;
+    }
+
+    for (contextName in objectContext) {
+      this._createContextGetter(contextName);
+    }
+    this._context = objectContext || {};
   };
 
   Entity.prototype._useContext = function (context) {

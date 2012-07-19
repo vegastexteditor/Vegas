@@ -116,6 +116,16 @@ define(function(require, exports, module) {
     this.length = 0;
   };
 
+  // @TODO: test
+  Collection.prototype.first = function () {
+    return this[0];
+  };
+
+  // @TODO: test
+  Collection.prototype.last = function () {
+    return this[this.length - 1];
+  };
+
   Collection.prototype.forEach = Collection.prototype.each;
 
   return Collection;
