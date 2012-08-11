@@ -1,29 +1,5 @@
 #!/bin/bash
 
-# Get and install dependencies required to build and run the application
-#source ./build/build_dependencies.sh
-
-
-# Build the application using the build configuration
-
-# node build/r.js
-#   Use r.js to concat and minify dependencies into one file:
-#   http://requirejs.org/docs/optimization.html
-
-# -o build/requireConfig.js
-#   Use specific require configuration file building.
-
-# name=main
-#   Build out dependencies from the main.js file located at src/main.js
-
-# out=built/main-built.js
-#   Output the concatenated and minified javascript file to the build directory
-#   so that vegas.html can read it in.
-#node build/r.js -o build/requireConfig.js name=main out=built/main-built.js
-
-#mkdir -p
-#cp -R ../src/themes/default 
-
 (
   # Go into the directory of where this file is located
   cd `dirname $0`
@@ -50,8 +26,30 @@
   echo "SRC_DIR: $SRC_DIR"
   echo "THEME_DIR: $THEME_DIR"
 
+  # Get and install dependencies required to build and run the application
+  echo "*** Building dependencies"
+  source $BUILD_DIR/build_dependencies.sh
+
+  # Build the application using the build configuration
+
+  # node build/r.js
+  #   Use r.js to concat and minify dependencies into one file:
+  #   http://requirejs.org/docs/optimization.html
+
+  # -o build/requireConfig.js
+  #   Use specific require configuration file building.
+
+  # name=main
+  #   Build out dependencies from the main.js file located at src/main.js
+
+  # out=built/main-built.js
+  #   Output the concatenated and minified javascript file to the build directory
+  #   so that vegas.html can read it in.
+  echo "*** Concating and minifying dependencies"
+  node $BUILD_DIR/r.js -o $BUILD_DIR/requireConfig.js name=main out=$BUILT_DIR/main-built.js
+
+  echo "*** Copying over themes"
   rm -rf $BUILT_DIR/themes/*
   cp -R $THEME_DIR/ $BUILT_DIR/themes
-
 )
 
