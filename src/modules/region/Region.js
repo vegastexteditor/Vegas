@@ -8,6 +8,11 @@ define(function(require, exports, module) {
     // extend Entity class for common methods
     util.extend(this, new Entity('Region', spaceInstance, options));
 
+    if (this.collection().length > 1) {
+      var baseRegion = this.collection().first();
+      new RegionPair(baseRegion);
+    }
+
     // Add the object to the collection
     this.collection().add(this);
 

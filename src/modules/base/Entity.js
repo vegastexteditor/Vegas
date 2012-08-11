@@ -1,9 +1,8 @@
 define(function(require, exports, module) {
   "use strict";
 
-  require('jquery');
-
   var util = require('util');
+  var $ = require('jquery');
 
   function Entity(name, object, options) {
 

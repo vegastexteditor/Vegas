@@ -113,7 +113,7 @@ define(function(require, exports, module) {
     // Set the title of the window
     this.setTitle();
 
-    var body = jQuery(this.getDocument().body);
+    var body = $(this.getDocument().body);
 
     var viewContainer = util.tpl('viewContainer', this._getTemplateVariables());
 

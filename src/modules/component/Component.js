@@ -38,6 +38,9 @@ define(function(require, exports, module) {
 
     var componentArea = regionElement.find('.components');
 
+    // hide currently displayed components.
+    componentArea.find('.component').hide();
+
     var componentContainer = util.tpl('componentContainer', this._getTemplateVariables());
 
     componentArea.append(componentContainer);
@@ -48,10 +51,12 @@ define(function(require, exports, module) {
    * application.
    */
   Component.prototype._getTemplateVariables = function () {
+    var self = this;
     // Gather up variables for the template
     var vars = {
-      id: this.getId(),
-      entity: this.getEntityName()
+      id: self.getId(),
+      entity: self.getEntityName(),
+      title: 'component: ' + self.collection().length
     };
 
     return vars;

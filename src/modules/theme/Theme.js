@@ -2,6 +2,7 @@ define(function(require, exports, module) {
 
   require('LAB');
   require('less');
+  $ = require('jquery');
 
   var LAB = $LAB;
 
@@ -40,7 +41,7 @@ define(function(require, exports, module) {
       link.rel = 'stylesheet/less';
       link.href = style;
       link.id = 'stylesheet' + i;
-      jQuery('head').append(link);
+      $('head').append(link);
       less.sheets.push(document.getElementById(link.id));
     });
 
@@ -64,7 +65,7 @@ define(function(require, exports, module) {
 
         templateFile = 'themes/' + themeName + '/templates/' + templateName + '.html?' + time;
 
-         jQuery.ajax({
+         $.ajax({
            url: templateFile,
            dataType: "html",
            success: function(template){
