@@ -15,26 +15,48 @@ define(function(require, exports, module) {
       // Whether or not to use the window the script is running in.
       useBaseWindow: false,
      // Changed if / when the window is opened, otherwise use primary window
-      windowContext: window // (function(){return this;}())
+      //windowContext: window // (function(){return this;}())
     }, options);
 
     // If first param is false, do not open a window, use the original vegas
     // window to create the view. This is typical for the first view.
-    this.settings('useBaseWindow', true);
+    //this.settings('useBaseWindow', true);
 
     // Let the view know about its context.
     this._setViewContext();
 
+    // Give the view a name, to be used on the window.
+    this.name = this.getId();
+
     // If we shouldn't use the base window
-    if (!this.settings('useBaseWindow')) {
+    if (this.collection().length > 0) {
       // then open the new window.
-      this._openWindow();
+      var win = this._openWindow();
+
+      // and set the context to the opened window
+      this._setContext('window', win);
     }
     else {
       // We are using a window thats already open, so its ready.
       this.trigger('load');
+
+      // Set the window context to the base window.
+      this._setContext('window', window);
+
+      // Notate that we are using the base window
       util.info('Using current window for view');
     }
+
+    this._setContext('document', this.getContext('window').document);
+
+    var win = this.getContext('window');
+    var self = this;
+
+    jQuery(win).bind('focus', function () {
+      var views = self.collection();
+      var view = views.getFromWindow(win);
+      view.setCurrent();
+    });
 
     var self = this;
     // When the view window has loaded.
@@ -73,7 +95,7 @@ define(function(require, exports, module) {
     var options = 'width=200,height=100';
     var _win = win.open('view.html?' + Math.random(0,9), this.name, options);
     // Let the view know about the new window reference
-    this._setContext('window', _win);
+    return _win;
   };
 
   // Closes the view window
@@ -91,12 +113,9 @@ define(function(require, exports, module) {
     });
 
     // Remove the view instances from the collection object.
-    vegas.views().removeAll();
+    //vegas.views().removeAll();
 
-    var self = this;
-    win.setTimeout(function () {
-      util.log(self);
-    }, 500);
+    this.remove();
 
   };
 
@@ -126,10 +145,10 @@ define(function(require, exports, module) {
     this._setContext('view', this, true);
 
     // Let the view know about its window
-    this._setContext('window', this.settings('windowContext'));
+    //this._setContext('window', this.settings('windowContext'));
 
     // Let the view know about its document
-    this._setContext('document', this.settings('windowContext').document);
+    //this._setContext('document', this.settings('windowContext').document);
 
   };
 

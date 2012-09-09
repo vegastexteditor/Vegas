@@ -262,6 +262,22 @@ define(function(require, exports, module) {
 
   };
 
+  Entity.prototype.remove = function () {
+
+    var self = this;
+    var entityId = this.getId();
+
+    var collection = this.collection();
+
+    collection.forEach(function (collectionItem, i) {
+      if (collectionItem.getId() == entityId) {
+        collection.removeFromPos(i);
+      }
+    });
+
+
+  };
+
   return Entity;
 
 });

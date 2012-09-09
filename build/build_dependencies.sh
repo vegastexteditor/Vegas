@@ -21,3 +21,4 @@ else
   echo "jake installed"
 fi
 
+npm install -g walk

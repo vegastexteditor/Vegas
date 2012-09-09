@@ -51,5 +51,6 @@
   echo "*** Copying over themes"
   rm -rf $BUILT_DIR/themes/*
   cp -R $THEME_DIR/ $BUILT_DIR/themes
+
 )
 

@@ -15,6 +15,11 @@ define(function(require, exports, module) {
   var Tab = require('tab/Tab');
   var Settings = require('Settings'); // @TODO: require settings.json instead.
   var Theme = require('theme/Theme');
+  var tabApi = require('tab/tabApi');
+
+  for (var apiMethod in tabApi) {
+    vegas[apiMethod] = tabApi[apiMethod];
+  }
 
   // Provide the application object
   global.vegas = {};
@@ -87,7 +92,7 @@ define(function(require, exports, module) {
       return vegas.regions().current();
     }
     var currentSpace = vegas.spaces().current();
-    return new Region(currentSpace);
+    return new RegionPair(currentSpace);
   };
 
   vegas.component = function () {
@@ -109,6 +114,7 @@ define(function(require, exports, module) {
   };
 
   vegas.theme.on('ready', function () {
+
     /** Create a new view */
     var initialView = new View(vegas);
     var initialSpace = new Space(initialView);

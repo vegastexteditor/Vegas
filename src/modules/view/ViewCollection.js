@@ -8,6 +8,10 @@ define(function(require, exports, module) {
     util.extend(this, new EntityCollection(vegas, options));
   }
 
+  ViewCollection.prototype.getFromWindow = function (win) {
+
+  };
+
   return ViewCollection;
 
 });
