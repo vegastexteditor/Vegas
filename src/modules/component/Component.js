@@ -22,7 +22,7 @@ define(function(require, exports, module) {
 
     this.setTitle();
 
-    this.collection()._pluralizeMethods(this);
+    //this.collection()._pluralizeMethods(this);
   }
 
   Component.prototype.setTitle = function (title) {

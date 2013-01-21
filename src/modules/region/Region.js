@@ -19,7 +19,15 @@ define(function(require, exports, module) {
     // Display the region
     this.render();
 
-    this.collection()._pluralizeMethods(this);
+    //this.collection()._pluralizeMethods(this);
+
+    //console.log('listening for new');
+
+    vegas.tabs().on('new', function () {
+      console.log('new tab created');
+
+    });
+
   }
 
   Region.prototype.render = function (options) {

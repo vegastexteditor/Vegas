@@ -16,7 +16,10 @@ define(function(require, exports, module) {
 
     this.setTitle();
 
-    this.collection()._pluralizeMethods(this);
+    //this.collection()._pluralizeMethods(this);
+
+    //console.log('triggering new', vegas.tabs().trigger);
+    vegas.tabs().trigger('new');
 
   }
 

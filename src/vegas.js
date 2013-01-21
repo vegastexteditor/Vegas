@@ -17,12 +17,12 @@ define(function(require, exports, module) {
   var Theme = require('theme/Theme');
   var tabApi = require('tab/tabApi');
 
+  // Provide the application object
+  global.vegas = {};
+
   for (var apiMethod in tabApi) {
     vegas[apiMethod] = tabApi[apiMethod];
   }
-
-  // Provide the application object
-  global.vegas = {};
 
   // Create a new settings object for use by the application
   var settings = new Settings();

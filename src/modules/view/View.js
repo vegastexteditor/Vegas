@@ -55,7 +55,9 @@ define(function(require, exports, module) {
     jQuery(win).bind('focus', function () {
       var views = self.collection();
       var view = views.getFromWindow(win);
-      view.setCurrent();
+      if (view) {
+        view.setCurrent();
+      }
     });
 
     var self = this;
@@ -86,7 +88,7 @@ define(function(require, exports, module) {
     // Add the object to the collection
     this.collection().add(this);
 
-    this.collection()._pluralizeMethods(this);
+    //this.collection()._pluralizeMethods(this);
   }
 
   // Opens the view window

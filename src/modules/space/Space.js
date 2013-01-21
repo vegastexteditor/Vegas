@@ -16,7 +16,7 @@ define(function(require, exports, module) {
     // Add the object to the collection
     this.collection().add(this);
 
-    this.collection()._pluralizeMethods(this);
+    //this.collection()._pluralizeMethods(this);
   }
 
   Space.prototype.render = function (options) {

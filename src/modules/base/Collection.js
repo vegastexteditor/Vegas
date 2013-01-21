@@ -126,6 +126,40 @@ define(function(require, exports, module) {
     return this[this.length - 1];
   };
 
+  Collection.prototype.trigger = function (event) {
+
+    //console.log('trigger');
+
+    this._on = this._on || {};
+
+    if (!this._on[event]) {
+      this._on[event] = [];
+    }
+
+    this._on[event].forEach(function (hook) {
+      hook.call(this, this);
+    });
+  };
+
+  Collection.prototype.on = function (event, callback) {
+
+    this._on = this._on || {};
+
+    if (!this._on[event]) {
+      this._on[event] = [];
+      this._on[event].push(callback);
+    }
+    else {
+      this._on[event].push(callback);
+      this.trigger(event);
+    }
+
+  };
+
+
+
+
+
   Collection.prototype.forEach = Collection.prototype.each;
 
   return Collection;
