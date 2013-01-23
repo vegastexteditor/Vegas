@@ -11,6 +11,7 @@ define(function(require, exports, module) {
   var View = require('view/View');
   var Space = require('space/Space');
   var Region = require('region/Region');
+  var RegionPair = require('region/RegionPair');
   var Component = require('component/Component');
   var Tab = require('tab/Tab');
   var Settings = require('Settings'); // @TODO: require settings.json instead.
@@ -118,7 +119,7 @@ define(function(require, exports, module) {
     /** Create a new view */
     var initialView = new View(vegas);
     var initialSpace = new Space(initialView);
-    var initialRegion = new Region(initialSpace);
+    var initialRegion = new RegionPair(initialSpace);
     var initialComponent = new Component(initialRegion);
   });
 

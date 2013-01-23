@@ -38,8 +38,16 @@ define(function(require, exports, module) {
   };
 
   Collection.prototype._add = function (item) {
+    if (!this._id_hash) {
+      this._id_hash = {};
+    }
+    this._id_hash[item.getId()] = this.length;
     this[this.length] = item;
     this.length++;
+  };
+
+  Collection.prototype.fromId = function (id) {
+    return this[this._id_hash[id]];
   };
 
   Collection.prototype.each = function (iterator, context) {
@@ -153,6 +161,22 @@ define(function(require, exports, module) {
       this._on[event].push(callback);
       this.trigger(event);
     }
+
+  };
+
+  Collection.prototype.getObjectFromElement = function (element) {
+    element = $(element);
+
+    var elementId = element.attr('id');
+
+    var foundCollectionObject = false;
+    this.each(function (collectionObject) {
+      if (collectionObject.getId() == elementId) {
+        foundCollectionObject = collectionObject;
+      }
+    });
+
+    return foundCollectionObject;
 
   };
 

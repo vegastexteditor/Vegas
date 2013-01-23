@@ -11,25 +11,85 @@ define(function(require, exports, module) {
     this.setName(name);
 
     this.useContextFrom(object);
-    this._setContext(this.getSingularName(), this, true);
 
-    this.setId();
+    this.useContext2From(object);
+
+    this._setContext2(this.getSingularName(), this);
+
+    this._setContext(this.getSingularName(), this, true);
 
     this.settings('collection', this.getPluralName());
 
   }
 
+  Entity.prototype.useContext2From = function (object) {
+    var contextName;
+
+    var objectContext;
+    if (typeof(object.getContext) == 'function') {
+      objectContext = object.getContext2();
+    }
+    else {
+      objectContext = object._context2;
+    }
+
+    //for (contextName in objectContext) {
+      //this._createContextGetter(contextName);
+    //}
+
+    this._context2 = objectContext || {};
+  };
+
+
+  Entity.prototype._setContext2 = function (contextName, contextValue) {
+    if (!this._context2) {
+      this._context2 = {};
+    }
+    this._context2[contextName] = contextValue.getId();
+  };
+
+  Entity.prototype.getRegion2 = function () {
+      return this.getContext2('region');
+  };
+
+  Entity.prototype.getContext2 = function (contextName) {
+    var context = this._context2;
+
+
+    if (contextName === undefined) {
+      return this._context2;
+    }
+
+    var foundContext = vegas[contextName + 's']().fromId(this._context2[contextName]);
+
+    if (foundContext) {
+      return foundContext;
+    }
+
+    util.warn('uncaught logic');
+
+    return false;
+
+
+  };
+
+
   /**
    * Get a nifty looking unique identifier
    */
   Entity.prototype.setId = function () {
-    this._id = util.generateId();
+    if (!this._id) {
+      this._id = util.generateId() + this.getName();
+    }
   };
 
   /**
    * Retrieve the entities ID
    */
   Entity.prototype.getId = function () {
+    if (!this._id) {
+      this.setId();
+    }
     return this._id;
   };
 
@@ -110,7 +170,6 @@ define(function(require, exports, module) {
     // Add the entity context
     this._setContext(contextName, this, true);
   };
-
   /**
    * Let the entity know about its context / anscestry, for example, a tab should
    * know about its component, a component should know about its region, a region
@@ -137,6 +196,8 @@ define(function(require, exports, module) {
       return this.getContext(contextName);
     };
   };
+
+
 
   Entity.prototype.useContextFrom = function (object) {
     var contextName;
@@ -173,6 +234,7 @@ define(function(require, exports, module) {
 
   Entity.prototype.getContext = function (contextName) {
     var context = this._context;
+
 
     if (contextName === undefined) {
       return this._context;

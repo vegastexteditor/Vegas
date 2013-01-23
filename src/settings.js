@@ -18,5 +18,7 @@ define(function(require, exports, module) {
   // Notate that the user settings have been read.
   settings._userSettingsRead= true;
 
+  settings.newTabButtonLeftOfTabs = true;
+
   return settings;
 });

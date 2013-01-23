@@ -20,13 +20,13 @@ define(function(require, exports, module) {
     // Create a correlating tab.
     this._setContext('tab', tabInstance);
 
-    this.setTitle();
+    //this.setTitle();
 
     //this.collection()._pluralizeMethods(this);
   }
 
   Component.prototype.setTitle = function (title) {
-    this.getTab().setTitle(title);
+    //this.getTab().setTitle(title);
   }
 
   Component.prototype.getTitle = function () {

@@ -11,10 +11,10 @@ define(function(require, exports, module) {
     // Add the object to the collection
     this.collection().add(this);
 
+    this.getRegion2().tabs().add(this);
+
     // Display the tab
     this.render();
-
-    this.setTitle();
 
     //this.collection()._pluralizeMethods(this);
 
@@ -23,34 +23,38 @@ define(function(require, exports, module) {
 
   }
 
-  Tab.prototype.setTitle = function (title) {
-
-    title = title || 'tab ' + vegas.tabs().length;
-
-    if (this._rendered) {
-      var titleElement = this.getElement().find('.title');
-      titleElement.html(title);
+  Tab.prototype.getTitle = function () {
+    if (!this._title) {
+      this._setTitle('tab ' + vegas.tabs().length);
     }
-    else {
-      this._setTemplateVariable('title', title);
-    }
-    this._title = title;
+    return this._title;
   };
 
-  Tab.prototype.getTitle = function () {
-    return this._title;
+  Tab.prototype._setTitle = function (title) {
+    this._title = title;
+    this._setTemplateVariable('title', title);
+  };
+
+  Tab.prototype.setTitle = function (title) {
+    this._setTitle(title);
+    this.render();
   };
 
   Tab.prototype.render = function (options) {
     var regionElement = this.getRegion().getElement();
 
     var tabArea = regionElement.find('.tabs');
-
     var tabContainer = util.tpl('tabContainer', this._getTemplateVariables());
 
-    tabArea.append(tabContainer);
+    tabContainer = jQuery(tabContainer);
 
-    this._rendered = true;
+    if (this.getElement().length) {
+      this.getElement().replaceWith(tabContainer);
+    }
+    else {
+      tabArea.append(tabContainer);
+    }
+
   };
 
   Tab.prototype._setTemplateVariable = function (key, value) {
@@ -69,10 +73,15 @@ define(function(require, exports, module) {
     // Gather up variables for the template
     vars.id = this.getId();
     vars.entity = this.getEntityName();
+    vars.title = this.getTitle();
 
     return vars;
   };
 
+  Tab.prototype.close = function () {
+    this.getElement().remove()
+    this.remove();
+  };
 
 
   return Tab;
